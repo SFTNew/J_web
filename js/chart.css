@@ -1,0 +1,28 @@
+/* ====================== 左侧工具栏 ====================== */
+
+/* 选中工具颜色 */
+html.theme-dark .button-263WXsg--.isActive-2mI1-NUL- .icon-1Y-3MM9F-{
+    color: #4740b7;
+}
+
+/* ====================== 顶部工具栏 ====================== */
+
+/* 顶部工具栏背景色 */
+html.theme-dark .group-wWM3zP_M-{
+    background-color: transparent;
+}
+
+/* 选中工具颜色 */
+html.theme-dark .button-2ioYhFEY-.isInteractive-20uLObIc-.isActive-22S-lGpa-, html.feature-no-touch.theme-dark .button-2ioYhFEY-.isInteractive-20uLObIc-.isActive-22S-lGpa-:hover, html.feature-no-touch.theme-dark .button-2ioYhFEY-.isInteractive-20uLObIc-.isActive-22S-lGpa-:active, html.feature-touch.theme-dark .button-2ioYhFEY-.isInteractive-20uLObIc-.isActive-22S-lGpa-:active{
+    color: #4740b7;
+}
+
+/* 隐藏legend展开+号 */
+.pane-legend .pane-legend-minbtn, .pane-legend .pane-legend-icon{
+    display: none;
+}
+
+/* 隐藏legend */
+.pane-legend-line > span.pane-legend-line:not(.no-context-menu){
+    display: none;
+}
