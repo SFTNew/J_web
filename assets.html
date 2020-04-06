@@ -18,7 +18,7 @@
     <div data-v-71bcbcd0="" class="head-logo fl"><a data-v-71bcbcd0="" href="index.html" class="index-link active"><img src="images/logo.png" width="228" height="32"></a></div>
     <ul data-v-71bcbcd0="" class="head-nav fl">
       <li data-v-71bcbcd0="" class="topnav-item"><a data-v-71bcbcd0="" href="index.html" class="topnav-link">首页</a></li>
-      <li data-v-71bcbcd0="" class="topnav-item"><span data-v-71bcbcd0="" class="topnav-link"><a href="trade.html">测试板块</a></span></li>
+      <li data-v-71bcbcd0="" class="topnav-item"><span data-v-71bcbcd0="" class="topnav-link"><a href="market.html">测试板块</a></span></li>
       <li data-v-71bcbcd0="" class="topnav-item"><a data-v-71bcbcd0="" href="news.html" class="topnav-link">新闻公告</a></li>
       <li data-v-71bcbcd0="" class="topnav-item"><a data-v-71bcbcd0="" href="download.html" class="topnav-link">APP下载</a></li>
     </ul>
@@ -84,12 +84,15 @@
       <div data-v-65dec896="" class="m-table-title"><span data-v-65dec896="">币种</span> <span data-v-65dec896="">可用数量</span> <span data-v-65dec896="">冻结数量</span> <span data-v-65dec896="">总计</span> <span data-v-65dec896="">操作</span></div>
       <div data-v-65dec896="" class="m-table-body selectable">
         <li data-v-65dec896="" class="m-table-li" v-for="item in list" :key="item">
-          <div data-v-65dec896=""><span data-v-65dec896="" class="icon"><img data-v-65dec896="" src="./images/wKgAF14FaUyAOOmUAAAduMvSQIE341.png"></span> <span data-v-65dec896="" class="shortname"v-if="item.coinId==1?'KRW':(item.tradeCoin?item.tradeCoin.name:'')"></span></div>
+
+          <div data-v-65dec896=""><span data-v-65dec896="" class="icon"><img data-v-65dec896="" src="./images/wKgAF14FaUyAOOmUAAAduMvSQIE341.png"></span> <span data-v-65dec896="" class="shortname" v-html="item.coinId==1?'KRW':(item.tradeCoin?item.tradeCoin.name:'')"></span></div>
           <div data-v-65dec896="" v-html="item.balanceAmount">0</div>
           <div data-v-65dec896="" v-html="item.freezeAmount">0</div>
           <div data-v-65dec896="" v-html="item.balanceAmount+item.freezeAmount">0</div>
           <div data-v-65dec896=""><span data-v-65dec896="" class="oper-link to-deposit"><a href="deposit.html">充币</a></span> <span data-v-65dec896="" class="oper-link to-withdraw"><a href="withdraw.html">提币</a></span></div>
+
         </li>
+
         
         
       </div>
