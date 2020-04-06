@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BUW</title>
+<title>DPX</title>
 <link rel="shortcut icon" href="https://DPX/static/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="./js/charting_library.min.js"></script>
 <script src="./js/bundle.js"></script>
@@ -12,7 +12,7 @@
 <link href="./css/app.96a30c902bc6678d30047c48f08f9b60.css" rel="stylesheet">
 </head>
 <body>
-<div data-v-0a61fb4f="" id="BUW">
+<div data-v-0a61fb4f="" id="DPX">
   <div data-v-71bcbcd0="" data-v-0a61fb4f="" class="page-head clearfix">
     <div data-v-71bcbcd0="" class="head-logo fl"><a data-v-71bcbcd0="" href="index.html" class="index-link active"><img src="images/logo.png" width="228" height="32"></a></div>
     <ul data-v-71bcbcd0="" class="head-nav fl">
@@ -24,16 +24,53 @@
     <div data-v-71bcbcd0="" class="language fr">
       <div data-v-72d88c58="" data-v-71bcbcd0="" class="language-switch">
         <nav class="nav">
-          <ul class="nav_menu">
-            <li class="nav_menu-item"><a href="login.html">登录</a></li>
-            <li class="nav_menu-item"><a href="register.html">注册</a></li>
+          <ul class="nav_menu" id="noLogin">
+            <li class="nav_menu-item" ><a href="login.html">登录</a></li>
+            <li class="nav_menu-item" ><a href="register.html">注册</a></li>
             <li class="nav_menu-item"><a href="#">中文简体</a>
+
               <ul class="nav_submenu">
                 <li class="nav_submenu-item"> <a href="#">中文简体</a></li>
                 <li class="nav_submenu-item"> <a href="#">中文繁體</a></li>
                 <li class="nav_submenu-item"> <a href="#">English</a></li>
               </ul>
             </li>
+          </ul>
+          <ul class="nav_menu" id="login" style="display: none;">
+  
+            <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-assets preicon"></i> 资产</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="assets.html">我的资产</a></li>
+                <li class="nav_submenu-item"> <a href="bill.html">充值记录</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-order preicon"></i> 订单</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="open.html">当前委托</a></li>
+                <li class="nav_submenu-item"> <a href="history.html">历史委托</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-login preicon"></i> 个人中心</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="security.html">安全中心</a></li>
+                <li class="nav_submenu-item"> <a href="login.html">退出</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav_menu-item"><a href="#">中文简体</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="#">中文简体</a></li>
+                <li class="nav_submenu-item"> <a href="#">中文繁體</a></li>
+                <li class="nav_submenu-item"> <a href="#">English</a></li>
+              </ul>
+            </li>
+        
           </ul>
         </nav>
       </div>
@@ -47,10 +84,10 @@
     </div>
     <div data-v-161ffe9a="" class="block">
       <div data-v-3f7ca9cc="" data-v-161ffe9a="">
-        <div data-v-3f7ca9cc="" class="notice-list">
+        <div data-v-3f7ca9cc="" class="notice-list" v-for="item in list" :key="item">
           
-          <a href="new_list.html">
-          <div data-v-3f7ca9cc="" class="notice-item"> 2019-12-27如何看待 12 月 26 号微信公众号出现大面积崩溃？发生了什么？ <span data-v-3f7ca9cc="" class="time">2019-12-27</span></div>
+          <a :href="'new_list.html?id='+item.id">
+          <div data-v-3f7ca9cc="" class="notice-item"> {{item.articleName}} <span data-v-3f7ca9cc="" class="time" v-html="_jM.date.date2DateTimeString(new Date(item.createTime))">2019-12-27</span></div>
           </a>
           
         </div>
@@ -73,5 +110,9 @@
 <script type="text/javascript" src="./js/manifest.1e08ca97e4ea39683e35.js"></script>
 <script type="text/javascript" src="./js/vendor.a9dae1ae722df261c2f8.js"></script>
 <script type="text/javascript" src="./js/app.88e70f53b504709ec45f.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script src="./js/public.js"></script>
+<script src="./js/vue.min.js"></script>
+<script src="./js/viewjs/news.js"></script>
 </body>
 </html>
