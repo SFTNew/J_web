@@ -47,13 +47,13 @@
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input"><!---->
             <form action="" mDPXod="get" style="line-height:34px">
-              <select name="" class="el-input__inner" style="background:#202131;cursor: pointer;">
-                <option data-v-27ab05a2 value="0" style="background:#202131;cursor: pointer;">
+              <select id="codeSelect" name="" class="el-input__inner" style="background:#202131;cursor: pointer;">
+                <option data-v-27ab05a2 value="+86" style="background:#202131;cursor: pointer;">
                 <li data-v-27ab05a2="" class="el-select-dropdown__item selected">
                 <span data-v-27ab05a2="" class="fl">中国大陆  - China </span> <span data-v-27ab05a2="" class="fr">+ 86</span>
                 </li>
                 </option>
-                <option value="1">
+                <option value="+82">
                 <li data-v-27ab05a2="" class="el-select-dropdown__item">
                 <span data-v-27ab05a2="" class="fl">韩国  - Korea </span> <span data-v-27ab05a2="" class="fr">+ 82</span>
                 </li>
@@ -67,7 +67,8 @@
         <div data-v-3eb2a00a="" class="label text-white-4">用户名：</div>
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input"><!---->
-            <input type="text" autocomplete="off" class="el-input__inner" placeholder="可用于登录，设置之后不能修改">
+            <input type="text" autocomplete="off" class="el-input__inner" placeholder="可用于登录，设置之后不能修改" v-model="account" @blur="blur_account">
+            <span v-show="vshow_account">{{msg_account}}</span>
             <!----><!----><!----><!----></div>
         </div>
         <!---->
@@ -77,7 +78,8 @@
         <div data-v-3eb2a00a="" class="label text-white-4">手机号码：</div>
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input"><!---->
-            <input type="text" autocomplete="off" class="el-input__inner">
+            <input type="text" autocomplete="off" class="el-input__inner" v-model="mobile" @blur="blur_mobile">
+            <span v-show="vshow_mobile">{{msg_mobile}}</span>
             <!----><!----><!----><!----></div>
         </div>
         <!----></div>
@@ -85,9 +87,9 @@
         <div data-v-3eb2a00a="" class="label text-white-4">图片验证码：</div>
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input el-input-group el-input-group--append"><!---->
-            <input type="text" autocomplete="off" class="el-input__inner">
+            <input type="text" autocomplete="off" v-model="validateCode" class="el-input__inner">
             <!----><!---->
-            <div class="el-input-group__append"><img data-v-a13d2348="" data-v-3eb2a00a="" src="images/yzm.webp" class="code-img"></div>
+            <div class="el-input-group__append"><img v-on:click="flushValidateCodeImgLogin" id="validateCodeImgLogin" data-v-a13d2348="" data-v-3eb2a00a="" src="" class="code-img"></div>
             <!----></div>
         </div>
       </div>
@@ -95,12 +97,13 @@
         <div data-v-3eb2a00a="" class="label text-white-4">短信验证码：</div>
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input el-input-group el-input-group--append"><!---->
-            <input type="text" autocomplete="off" class="el-input__inner">
+            <input type="text" autocomplete="off" class="el-input__inner" v-model="sms" @blur="blur_sms">
             <!----><!---->
             <div class="el-input-group__append">
-              <button data-v-c71c3f18="" data-v-3eb2a00a="" type="button" class="el-button code-btn el-button--text"><!----><!----><span>发送验证码</span></button>
+              <button data-v-c71c3f18="" data-v-3eb2a00a="" @click="sendSms" type="button" class="el-button code-btn el-button--text"><!----><!----><span v-text="sendSmsText"></span></button>
             </div>
             <!----></div>
+            <span v-show="vshow_sms">{{msg_sms}}</span>
         </div>
       </div>
      
@@ -108,7 +111,8 @@
         <div data-v-3eb2a00a="" class="label text-white-4">密码：</div>
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input"><!---->
-            <input type="password" autocomplete="off" class="el-input__inner">
+            <input type="password" autocomplete="off" v-model="password" class="el-input__inner" @blur="blur_password">
+            <span v-show="vshow_password">{{msg_password}}</span>
             <!----><!----><!----><!----></div>
         </div>
         <div data-v-3eb2a00a="" class="item-tip text-white-3">6~16位，字母和数字二种组合</div>
@@ -117,7 +121,8 @@
         <div data-v-3eb2a00a="" class="label text-white-4">确认密码：</div>
         <div data-v-3eb2a00a="">
           <div data-v-3eb2a00a="" class="el-input"><!---->
-            <input type="password" autocomplete="off" class="el-input__inner">
+            <input type="password" autocomplete="off" v-model="repassword" class="el-input__inner" @blur="blur_repassword">
+            <span v-show="vshow_repassword">{{msg_repassword}}</span>
             <!----><!----><!----><!----></div>
         </div>
       </div>
@@ -132,7 +137,7 @@
         <!----></div>
       
       <div data-v-3eb2a00a="" class="form-btn block-btn">
-        <button data-v-3eb2a00a="" type="button" class="el-button el-button--primary"><!----><!----><span>注册</span></button>
+        <button data-v-3eb2a00a="" type="button" class="el-button el-button--primary" @click="register"><!----><!----><span>注册</span></button>
       </div>
     </div>
   </div>
@@ -145,5 +150,9 @@
 <script type="text/javascript" src="./js/manifest.1e08ca97e4ea39683e35.js"></script> 
 <script type="text/javascript" src="./js/vendor.a9dae1ae722df261c2f8.js"></script> 
 <script type="text/javascript" src="./js/app.88e70f53b504709ec45f.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="./js/vue.min.js"></script>
+<script type="text/javascript" src="./js/public.js"></script>
+<script type="text/javascript" src="./js/viewjs/register.js"></script>
 </body>
 </html>

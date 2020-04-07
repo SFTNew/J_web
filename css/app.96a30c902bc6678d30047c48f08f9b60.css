@@ -2410,7 +2410,8 @@
 	width: 108px;
 }
 [data-v-288698be].page-foot {
-	width: 100%; height: 254px; bottom: 0px; position: absolute;
+	width: 100%; height: 254px; bottom: 0px; 
+	/* position: absolute; */
 }
 .page-foot [data-v-288698be].foot-nav {
 	display: flex;
