@@ -10,8 +10,8 @@ var app = new Vue({
         msg_validateCode:"",
 
         validateCode:"",
-        mobile:"18376757141",
-        password:"123456",
+        mobile:"",
+        password:"",
     },
     methods:{ 
         login:function(){
