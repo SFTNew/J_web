@@ -18,7 +18,7 @@
     <div data-v-71bcbcd0="" class="head-logo fl"><a data-v-71bcbcd0="" href="index.html" class="index-link active"><img src="images/logo.png" width="228" height="32"></a></div>
     <ul data-v-71bcbcd0="" class="head-nav fl">
       <li data-v-71bcbcd0="" class="topnav-item"><a data-v-71bcbcd0="" href="index.html" class="topnav-link">首页</a></li>
-      <li data-v-71bcbcd0="" class="topnav-item"><span data-v-71bcbcd0="" class="topnav-link active"><a href="market.html">测试板块</a></span></li>
+      <li data-v-71bcbcd0="" class="topnav-item"><span data-v-71bcbcd0="" class="topnav-link active"><a href="market.html">交易板块</a></span></li>
       <li data-v-71bcbcd0="" class="topnav-item"><a data-v-71bcbcd0="" href="news.html" class="topnav-link">新闻公告</a></li>
       <li data-v-71bcbcd0="" class="topnav-item"><a data-v-71bcbcd0="" href="download.html" class="topnav-link">APP下载</a></li>
     </ul>
@@ -59,7 +59,7 @@
             
               <ul class="nav_submenu">
                 <li class="nav_submenu-item"> <a href="security.html">安全中心</a></li>
-                <li class="nav_submenu-item"> <a href="login.html">退出</a></li>
+                <li class="nav_submenu-item"> <a href="javascript:void(0)" onclick="_jM.login.logout();">退出</a></li>
               </ul>
             </li>
             
@@ -74,8 +74,8 @@
         
           </ul>
         </nav>
-</div>
       </div>
+    </div>
   </div>
   <div data-v-1a76b440="" data-v-0a61fb4f="" id="trade" class="trade-content">
     <div data-v-1a76b440="" class="main">
@@ -178,17 +178,17 @@
               <div data-v-1a76b440="" class="trade-table-body el-scrollbar" style="width: 100%; height: 538px;">
                 <div class="el-scrollbar__wrap" style="margin-bottom: -17px; margin-right: -17px;">
                   <ul class="el-scrollbar__view">
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">19:00:36</div>
-                      <div data-v-1a76b440="" class="text-red">231.53</div>
-                      <div data-v-1a76b440="">1.101</div>
+                    <li data-v-1a76b440="" class="trade-table-item" v-for="item in tradeList" :key="item"  v-if="isToday(item)">
+                      <div data-v-1a76b440="" v-html="tradeTime(item)" >19:00:36</div>
+                      <div data-v-1a76b440="" :class="item.type==2?'text-green':'text-red'" v-html="item.price">231.53</div>
+                      <div data-v-1a76b440=""  v-html="item.number">1.101</div>
                     </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
+                    <!-- <li data-v-1a76b440="" class="trade-table-item">
                       <div data-v-1a76b440="">18:11:41</div>
-                      <div data-v-1a76b440="" class="text-green">230.05</div>
+                      <div data-v-1a76b440="" class="">230.05</div>
                       <div data-v-1a76b440="">1.439</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
+                    </li> -->
+                    <!-- <li data-v-1a76b440="" class="trade-table-item">
                       <div data-v-1a76b440="">17:26:58</div>
                       <div data-v-1a76b440="" class="text-red">230.32</div>
                       <div data-v-1a76b440="">1.116</div>
@@ -427,7 +427,7 @@
                       <div data-v-1a76b440="">03:39:18</div>
                       <div data-v-1a76b440="" class="text-green">238.71</div>
                       <div data-v-1a76b440="">1.374</div>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
                 <div class="el-scrollbar__bar is-horizontal">
@@ -455,10 +455,10 @@
         
         <div data-v-1a76b440="" class="trade-table">
           <div data-v-1a76b440="" class="trade-table-head"><span data-v-1a76b440="">时间</span> <span data-v-1a76b440="">交易对</span> <span data-v-1a76b440="">方向</span> <span data-v-1a76b440="">价格(KRW)</span> <span data-v-1a76b440="">数量(DPX)</span> <span data-v-1a76b440="">委托总金额(KRW)</span> <span data-v-1a76b440="">已成交数量(DPX)</span> <span data-v-1a76b440="">操作</span></div>
-          
         </div>
-        
-        
+          <div data-v-1a76b440="" class="trade-table" v-for="item in orderList" :key="item">
+        <div data-v-1a76b440="" class="trade-table-head" ><span data-v-1a76b440="" v-html="_jM.date.date2DateTimeString(new Date(item.createTime))"></span> <span data-v-1a76b440="" v-html="item.market+'/KRW'"></span> <span data-v-1a76b440="" v-html="item.type==1?'买入':'卖出'">方向</span> <span data-v-1a76b440="" v-html="item.price"> 价格(KRW)</span> <span data-v-1a76b440="" v-html="item.num">数量(DPX)</span> <span data-v-1a76b440="" v-html="item.mum">委托总金额(KRW)</span> <span data-v-1a76b440="" v-html="item.deal">已成交数量(DPX)</span> <span data-v-1a76b440="" v-if="item.status==0" @click="cancelOrder(item.id)">撤销</span></div>
+      </div>
         
       </div>
       
@@ -467,8 +467,8 @@
         <div data-v-1a76b440="" class="trade-block-title"><span data-v-1a76b440="">限价交易</span></div>
         <div data-v-1a76b440="" class="panel-box">
           <div data-v-1a76b440="" class="trade-panel">
-            <div data-v-1a76b440="" class="clearfix balance"><span data-v-1a76b440="" class="fl">可用数量&nbsp; <em data-v-1a76b440="" class="text-red">0&nbsp;
-              KRW</em></span> <span data-v-1a76b440="" class="fr to-deposit">充币</span></div>
+            <div data-v-1a76b440="" class="clearfix balance"><span data-v-1a76b440="" class="fl">可用数量&nbsp; <em data-v-1a76b440="" class="text-red"><span v-html="canUseKRW"></span>&nbsp;
+              <span v-html="market.tradeMarket.title.split('/')[1]"></span></em></span> <span data-v-1a76b440="" class="fr to-deposit">充币</span></div>
             <div data-v-1a76b440="" class="trade-box">
               <div data-v-1a76b440="" class="input-item">
                 <label data-v-1a76b440="" class="label">买入价</label>
@@ -503,7 +503,7 @@
             </div>
           </div>
           <div data-v-1a76b440="" class="trade-panel">
-            <div data-v-1a76b440="" class="clearfix balance"><span data-v-1a76b440="" class="fl">可用数量&nbsp; <em data-v-1a76b440="" class="text-green">0&nbsp;DPX</em></span> <span data-v-1a76b440="" class="fr to-deposit">充币</span></div>
+            <div data-v-1a76b440="" class="clearfix balance"><span data-v-1a76b440="" class="fl">可用数量&nbsp; <em data-v-1a76b440="" class="text-green"><span v-html="canUseCoin"></span>&nbsp;<span v-html="market.tradeMarket.title.split('/')[0]"></span></em></span> <span data-v-1a76b440="" class="fr to-deposit">充币</span></div>
             <div data-v-1a76b440="" class="trade-box">
               <div data-v-1a76b440="" class="input-item">
                 <label data-v-1a76b440="" class="label">卖出价</label>

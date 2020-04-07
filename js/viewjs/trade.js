@@ -7,9 +7,12 @@ var app = new Vue({
         sellPrice:0,
         sellNumber:0,
         sellTotal:0,
+        canUseKRW:0,
+        canUseCoin:0,
         buyList:[],//买入委托记录
         sellList:[],//卖出委托
         tradeList:[],//成交记录
+        orderList:[],//个人委托
         marketList:[],//市场列表
         market:{},  //当前市场
     },
@@ -17,7 +20,7 @@ var app = new Vue({
         //下单
         createOrder:function(obj,type){
             var param = {}
-            param.marketId = this.market.id;
+            param.marketId = this.market.tradeMarket.id;
             param.type = type;
             if(type == 1){
                 param.price = this.buyPrice;
@@ -29,38 +32,38 @@ var app = new Vue({
             $(obj).attr('disabled', 'disabled');
 
             _jM.post("/trade/order/serverCreateOrder.o", param, function (rs, data) {
-
+                alert("下单成功");
                 $(obj).removeAttr('disabled');
             },function(rs){
                 $(obj).removeAttr('disabled');
                 if(rs.statusCode == 1000){
-                    layer.msg("请先您登陆后在下单");
+                    alert("请先您登陆后在下单");
                 }else if (rs.statusCode == 2000) {
-                    layer.msg("参数设置有误，请检查价格与数量，交易密码！");
+                    alert("参数设置有误，请检查价格与数量，交易密码！");
                 } else if (rs.statusCode == 3002) {
-                    layer.msg("交易密码错");
+                    alert("交易密码错");
                 } else if (rs.statusCode == 2001) {
-                    layer.msg("不在交易时间范围内！");
+                    alert("不在交易时间范围内！");
                 } else if (rs.statusCode == 2002) {
-                    layer.msg(rs.resultDesc);
+                    alert(rs.resultDesc);
                 } else if (rs.statusCode == 2003) {
-                    layer.msg("交易金额超出最大单笔交易范围！");
+                    alert("交易金额超出最大单笔交易范围！");
                 } else if (rs.statusCode == 2004) {
-                    layer.msg("当前系统繁忙，请稍后再试！");
+                    alert("当前系统繁忙，请稍后再试！");
                 } else if (rs.statusCode == 2005) {
-                    layer.msg("系统升级中，请稍后再试！");
+                    alert("系统升级中，请稍后再试！");
                 } else if (rs.statusCode == 2006) {
-                    layer.msg("系统已经达到最大涨跌幅，禁止交易。");
+                    alert("系统已经达到最大涨跌幅，禁止交易。");
                 } else if (rs.statusCode == 3000) {
-                    layer.msg("用户余额不够，请充值后再试！");
+                    alert("用户余额不够，请充值后再试！");
                 } else if (rs.statusCode == 3001) {
-                    layer.msg("用户账户状态被冻结，不能完成下单！");
+                    alert("用户账户状态被冻结，不能完成下单！");
                 } else if (rs.statusCode == 3003) {
-                    layer.msg("当前商品不可交易！");
+                    alert("当前商品不可交易！");
                 }else if(rs.statusCode == 3004){
-                    layer.msg("不在交易时间范围内！");
+                    alert("不在交易时间范围内！");
                 }else if (rs.statusCode == 1) {
-                    layer.msg(rs.resultDesc);
+                    alert(rs.resultDesc);
                 }
             });
 
@@ -98,14 +101,36 @@ var app = new Vue({
         },
         //选择当前市场
         indexMarket:function(item){
-            console.log(item);
             this.market = item;
+            this.getUserAccount();
+            this.getTurnoverOrderList();
+            this.getDepth();
+            this.getEntrustOrderList();
         },
         //获取用户账户
         getUserAccount: function(){
+            // alert(JSON.stringify(this.market));
             _jM.post("/trade/finance/serverGetUserAccount.o?marketId=" + this.market.tradeMarket.id, null, function (rs, data) {
                 if (data != null) {
-                    console.log(data);
+                    app.canUseKRW = data.buyAmount;
+                    app.canUseCoin = data.sellAmount;
+                }
+            });
+        },
+        getEntrustOrderList:function(){
+            _jM.post("/trade/order/serverGetEntrustOrderList.o?rows=20&page=1&marketId=" + this.market.tradeMarket.id + "&status=-1", null, function (rs, data) {
+                if (data != null) {
+                    app.orderList = data.result;
+                    // alert(JSON.stringify(app.orderList))
+                }
+            });
+        },
+        //获取成交记录
+        getTurnoverOrderList:function() {
+            _jM.post("/trade/order/getTurnoverOrderList.o?marketId=" + this.market.tradeMarket.id, null, function (rs, data) {
+                if (data != null) {
+                    app.tradeList = data;
+                    
                 }
             });
         },
@@ -136,6 +161,28 @@ var app = new Vue({
             }
             return s_x;
         },
+        tradeTime:function(item){
+            var date = new Date(item.createTime);
+            // if(date.getUTCFullYear() != now.getUTCFullYear() || date.getUTCDay() != now.getUTCDay()
+            //     || date.getUTCMonth() != now.getUTCMonth()
+            // ){
+            //     break;
+            // }
+            var hours = date.getHours()<10?'0'+date.getHours():date.getHours();
+            var minetes = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
+            var seconds = date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds();
+            return hours+":"+minetes+":"+seconds;
+        },
+        isToday:function(item){
+            var now = new Date();
+            var date = new Date(item.createTime);
+            if(date.getUTCFullYear() != now.getUTCFullYear() || date.getUTCDay() != now.getUTCDay()
+                || date.getUTCMonth() != now.getUTCMonth()
+            ){
+                return false;
+            }
+            return true;
+        },
         //获取买一卖一列表
 		getDepth:function() {
 			_jM.post("/trade/order/getEntrustOrderList.o?limit=6&marketId="+this.market.tradeMarket.id, null, function(rs, data) {
@@ -148,7 +195,6 @@ var app = new Vue({
             _jM.login.isLogin(function () {
                 $("#login").show();
                 $("#noLogin").hide();
-                app.userInfo();
             }, function () {
                 $("#noLogin").show()
             });
@@ -157,8 +203,6 @@ var app = new Vue({
     created:function(){
         this.isLogin();
         this.getmarketList();
-        this.getDepth();
-        this.getUserAccount();
     }
 })
 
