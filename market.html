@@ -24,25 +24,56 @@
     </ul>
     <div data-v-71bcbcd0="" class="language fr">
       <div data-v-72d88c58="" data-v-71bcbcd0="" class="language-switch">
-    <nav class="nav">
-  <ul class="nav_menu">
-    <li class="nav_menu-item"><a href="login.html">登录</a></li>
-    
-    <li class="nav_menu-item"><a href="register.html">注册</a></li>
-    
-    <li class="nav_menu-item"><a href="#">中文简体</a>
-    
-      <ul class="nav_submenu">
-        <li class="nav_submenu-item"> <a href="#">中文简体</a></li>
-        <li class="nav_submenu-item"> <a href="#">中文繁體</a></li>
-        <li class="nav_submenu-item"> <a href="#">English</a></li>
-      </ul>
-    </li>
-    
-    
+        <nav class="nav">
+          <ul class="nav_menu" id="noLogin">
+            <li class="nav_menu-item" ><a href="login.html">登录</a></li>
+            <li class="nav_menu-item" ><a href="register.html">注册</a></li>
+            <li class="nav_menu-item"><a href="#">中文简体</a>
 
-  </ul>
-</nav>
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="#">中文简体</a></li>
+                <li class="nav_submenu-item"> <a href="#">中文繁體</a></li>
+                <li class="nav_submenu-item"> <a href="#">English</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav_menu" id="login" style="display: none;">
+  
+            <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-assets preicon"></i> 资产</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="assets.html">我的资产</a></li>
+                <li class="nav_submenu-item"> <a href="bill.html">充值记录</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-order preicon"></i> 订单</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="open.html">当前委托</a></li>
+                <li class="nav_submenu-item"> <a href="history.html">历史委托</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-login preicon"></i> 个人中心</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="security.html">安全中心</a></li>
+                <li class="nav_submenu-item"> <a href="login.html">退出</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav_menu-item"><a href="#">中文简体</a>
+            
+              <ul class="nav_submenu">
+                <li class="nav_submenu-item"> <a href="#">中文简体</a></li>
+                <li class="nav_submenu-item"> <a href="#">中文繁體</a></li>
+                <li class="nav_submenu-item"> <a href="#">English</a></li>
+              </ul>
+            </li>
+        
+          </ul>
+        </nav>
 </div>
       </div>
   </div>
@@ -59,7 +90,7 @@
           </div>
         </div>
         <ul data-v-1a76b440="" class="coin-tab-control">
-          <li data-v-1a76b440=""><span data-v-1a76b440="" class="">DPX</span></li>
+          <!-- <li data-v-1a76b440=""><span data-v-1a76b440="" class="">DPX</span></li> -->
           <li data-v-1a76b440=""><span data-v-1a76b440="" class="active">KRW</span></li>
         </ul>
         <div data-v-1a76b440="" class="trade-table">
@@ -71,11 +102,11 @@
           <div data-v-1a76b440="" class="trade-table-body selectable el-scrollbar" style="width: 100%; height: 510px;">
             <div class="el-scrollbar__wrap" style="margin-bottom: -17px; margin-right: -17px;">
               <ul class="el-scrollbar__view">
-                <li data-v-1a76b440="" class="trade-table-item active">
-                  <div data-v-1a76b440="" class="custom-select"><i data-v-1a76b440="" class="iconfont icon-star-full text-gray"></i></div>
-                  <div data-v-1a76b440=""> DPX<span data-v-1a76b440="" class="text-white-3">/KRW</span></div>
-                  <div data-v-1a76b440="">231.53</div>
-                  <div data-v-1a76b440="" class="text-red"><span data-v-1a76b440="">-</span> <span data-v-1a76b440="">5.95%</span></div>
+                <li data-v-1a76b440="" class="trade-table-item active" v-for="item in marketList" :key="item" @click="indexMarket(item)">
+                  <!-- <div data-v-1a76b440="" class="custom-select"><i data-v-1a76b440="" class="iconfont icon-star-full text-gray"></i></div> -->
+                  <div data-v-1a76b440="" > <span v-html="item.tradeMarket.title.split('/')[0]"></span><span data-v-1a76b440="" class="text-white-3">/<span v-html="item.tradeMarket.title.split('/')[1]"></span></div>
+                  <div data-v-1a76b440="" v-html="item.newest!=null?item.newest.closePrice:item.tradeMarket.closePrice">231.53</div>
+                  <div data-v-1a76b440="" :class=" getzdf(item)>0?'text-red':getzdf(item)==0?'':'text-green'"><span v-html="getzdf(item)==0?'':(getzdf(item)>0?'+':'-')" data-v-1a76b440="">-</span> <span data-v-1a76b440="" v-html="getzdf(item)+'%'">5.95%</span></div>
                 </li>
               </ul>
             </div>
@@ -91,22 +122,22 @@
       <div data-v-1a76b440="" class="trade-chart">
         <div data-v-1a76b440="" class="chart-head">
           <div data-v-1a76b440="" class="wrapper">
-            <div data-v-1a76b440="" class="coin-code">DPX<span data-v-1a76b440="" class="text-white-3">/KRW</span></div>
+            <div data-v-1a76b440="" class="coin-code"><span v-html="market.tradeMarket.title.split('/')[0]"></span><span data-v-1a76b440="" class="text-white-3">/<span v-html="market.tradeMarket.title.split('/')[1]"></span></span></div>
             <div data-v-1a76b440="" class="price">
-              <label data-v-1a76b440="" class="text-red">231.53</label>
+              <label data-v-1a76b440="" :class=" getzdf(market)>0?'text-red':getzdf(market)==0?'':'text-green'" v-html="market.newest!=null?market.newest.closePrice:market.tradeMarket.closePrice">231.53</label>
               <span data-v-1a76b440="">≈231,5300 KRW </span></div>
             <div data-v-1a76b440="" class="chart-info-item change">
               <label data-v-1a76b440="">涨幅</label>
-              <span data-v-1a76b440="" class="text-red">- 5.95%</span></div>
+              <span data-v-1a76b440="" :class=" getzdf(market)>0?'text-red':getzdf(market)==0?'':'text-green'"><span v-html="getzdf(market)==0?'':(getzdf(market)>0?'+':'-')"></span><span  v-html="getzdf(market)+'%'"></span></span></div>
             <div data-v-1a76b440="" class="chart-info-item">
               <label data-v-1a76b440="">最高价</label>
-              <span data-v-1a76b440="">242.45</span></div>
+              <span data-v-1a76b440="" v-html="market.newest!=null?market.newest.maxPrice:market.tradeMarket.closePrice">242.45</span></div>
             <div data-v-1a76b440="" class="chart-info-item">
               <label data-v-1a76b440="">最低价</label>
-              <span data-v-1a76b440="">229.03</span></div>
+              <span data-v-1a76b440=""  v-html="market.newest!=null?market.newest.minPrice:market.tradeMarket.closePrice">229.03</span></div>
             <div data-v-1a76b440="" class="chart-info-item">
               <label data-v-1a76b440="">24H交易量</label>
-              <span data-v-1a76b440="">30.792</span></div>
+              <span data-v-1a76b440="" v-html="market.newest!=null?market.newest.totalNum:'0'">30.792</span></div>
           </div>
           </div>
         <div data-v-1a76b440="" id="kLine" class="k-line">
@@ -120,37 +151,12 @@
         <div data-v-1a76b440="" class="data-tables">
           <div data-v-1a76b440="" class="table-container ask-list active">
             <div data-v-1a76b440="" class="trade-table">
-              <div data-v-1a76b440="" class="trade-table-head"><span data-v-1a76b440=""></span> <span data-v-1a76b440="">价格(KRW)</span> <span data-v-1a76b440="">数量(DPX)</span></div>
+              <div data-v-1a76b440="" class="trade-table-head"><span data-v-1a76b440=""></span> <span data-v-1a76b440="">价格(<span v-html="market.tradeMarket.title.split('/')[1]"></span>)</span> <span data-v-1a76b440="">数量(<span v-html="market.tradeMarket.title.split('/')[0]"></span>)</span></div>
               <ul data-v-1a76b440="" class="trade-table-body selectable sell-list">
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-green">卖1</div>
-                  <div data-v-1a76b440="">225.9</div>
-                  <div data-v-1a76b440="">2.135</div>
-                </li>
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-green">卖2</div>
-                  <div data-v-1a76b440="">226.03</div>
-                  <div data-v-1a76b440="">6.645</div>
-                </li>
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-green">卖3</div>
-                  <div data-v-1a76b440="">226.04</div>
-                  <div data-v-1a76b440="">2.211</div>
-                </li>
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-green">卖4</div>
-                  <div data-v-1a76b440="">226.21</div>
-                  <div data-v-1a76b440="">2.159</div>
-                </li>
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-green">卖5</div>
-                  <div data-v-1a76b440="">226.23</div>
-                  <div data-v-1a76b440="">3.677</div>
-                </li>
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-green">卖6</div>
-                  <div data-v-1a76b440="">226.27</div>
-                  <div data-v-1a76b440="">2.597</div>
+                <li data-v-1a76b440="" class="trade-table-item" v-for="item,index in sellList" :key="index">
+                  <div data-v-1a76b440="" class="text-green" v-html="'卖'+(index+1)"></div>
+                  <div data-v-1a76b440="" v-html="item.price">225.9</div>
+                  <div data-v-1a76b440="" v-html="item.number">2.135</div>
                 </li>
               </ul>
             </div>
@@ -158,10 +164,10 @@
             </div>
             <div data-v-1a76b440="" class="trade-table">
               <ul data-v-1a76b440="" class="trade-table-body selectable">
-                <li data-v-1a76b440="" class="trade-table-item">
-                  <div data-v-1a76b440="" class="text-red">买1</div>
-                  <div data-v-1a76b440="">123</div>
-                  <div data-v-1a76b440="">3</div>
+                <li data-v-1a76b440="" class="trade-table-item" v-for="item,index in buyList" :key="index">
+                  <div data-v-1a76b440="" class="text-red" v-html="'买'+(index+1)">1</div>
+                  <div data-v-1a76b440="" v-html="item.price">225.9</div>
+                  <div data-v-1a76b440="" v-html="item.number">2.135</div>
                 </li>
               </ul>
             </div>
@@ -468,7 +474,7 @@
                 <label data-v-1a76b440="" class="label">买入价</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="buyPrice">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">KRW</span></div>
               </div>
@@ -476,7 +482,7 @@
                 <label data-v-1a76b440="" class="label">买入量</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="buyNumber">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">DPX</span></div>
               </div>
@@ -484,15 +490,15 @@
                 <label data-v-1a76b440="" class="label">交易额</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini is-disabled"><!---->
-                    <input type="number" disabled="disabled" autocomplete="off" class="el-input__inner">
+                    <input type="number" disabled="disabled" autocomplete="off" class="el-input__inner" v-model="buyTotal">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">KRW</span></div>
               </div>
               <div data-v-1a76b440="" class="trade-lay-item">
                 <label data-v-1a76b440="" class="label">手续费</label>
-                <span data-v-1a76b440="" class="trade-lay"><span data-v-1a76b440="" class="text-white-1">0</span>&nbsp;<span data-v-1a76b440="" class="text-white-3">DPX</span> （<span data-v-1a76b440="" class="text-red">0.2%</span>）</span></div>
+                <span data-v-1a76b440="" class="trade-lay"><span data-v-1a76b440="" class="text-white-1">0</span>&nbsp;<span data-v-1a76b440="" class="text-white-3">DPX</span> （<span data-v-1a76b440="" class="text-red">0%</span>）</span></div>
               <div data-v-1a76b440="" class="trade-input block-btn">
-                <button data-v-1a76b440="" type="button" class="el-button el-button--danger el-button--mini"><!----><!----><span>买入DPX</span></button>
+                <button data-v-1a76b440="" type="button" class="el-button el-button--danger el-button--mini" @click="createOrder($event,1)"><!----><!----><span>买入DPX</span></button>
               </div>
             </div>
           </div>
@@ -503,7 +509,7 @@
                 <label data-v-1a76b440="" class="label">卖出价</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="sellPrice">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">KRW</span></div>
               </div>
@@ -511,7 +517,7 @@
                 <label data-v-1a76b440="" class="label">卖出量</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="sellNumber">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">DPX</span></div>
               </div>
@@ -519,15 +525,15 @@
                 <label data-v-1a76b440="" class="label">交易额</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini is-disabled"><!---->
-                    <input type="number" disabled="disabled" autocomplete="off" class="el-input__inner">
+                    <input type="number" disabled="disabled" autocomplete="off" class="el-input__inner" v-model="sellTotal"> 
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">KRW</span></div>
               </div>
               <div data-v-1a76b440="" class="trade-lay-item">
                 <label data-v-1a76b440="" class="label">手续费</label>
-                <span data-v-1a76b440="" class="trade-lay"><span data-v-1a76b440="" class="text-white-1">0</span>&nbsp;<span data-v-1a76b440="" class="text-white-3">KRW</span> （<span data-v-1a76b440="" class="text-green">0.2%</span>）</span></div>
+                <span data-v-1a76b440="" class="trade-lay"><span data-v-1a76b440="" class="text-white-1">0</span>&nbsp;<span data-v-1a76b440="" class="text-white-3">KRW</span> （<span data-v-1a76b440="" class="text-green">0%</span>）</span></div>
               <div data-v-1a76b440="" class="trade-input block-btn">
-                <button data-v-1a76b440="" type="button" class="el-button el-button--success el-button--mini"><!----><!----><span>卖出DPX</span></button>
+                <button data-v-1a76b440="" type="button" class="el-button el-button--success el-button--mini" @click="createOrder($event,2)"><!----><!----><span>卖出DPX</span></button>
               </div>
             </div>
           </div>
@@ -554,6 +560,10 @@
 
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/mt-tabpage.js"></script>
+<script src="./js/public.js"></script>
+<script src="./js/vue.min.js"></script>
+<script src="./js/socket.io.js"></script>
+<script src="./js/viewjs/trade.js"></script>
 <script type="text/javascript">
 $(function () {
 
