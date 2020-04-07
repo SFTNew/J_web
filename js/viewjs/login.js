@@ -25,7 +25,7 @@ var app = new Vue({
                 $.post("/platform/user/login.m", params, function(data){
                     console.log(data);
                     _jM.login.getLogin(function(user){
-                        if(user.status==1){// 有效用户
+                        // if(user.status==1){// 有效用户
                             //检查注册信息是否完善
                             if("null" == user.userName || _jM.validate.isEmpty(user.userName)){
                                 window.location.href="security.html";
@@ -38,9 +38,9 @@ var app = new Vue({
                                 window.location.href="/index.html#ho";
                             }
                         }
-                        }else{
-                            alert("当前用户已冻结");
-                        }
+                        // }else{
+                        //     alert("当前用户已冻结");
+                        // }
                     });
                 });
             }

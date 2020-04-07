@@ -1,21 +1,18 @@
 var app = new Vue({
     el: "#BUW",
     data: {
-        vshow_account: false,
         vshow_password: false,
         vshow_mobile: false,
         vshow_validateCode: false,
         vshow_repassword: false,
         vshow_sms: false,
 
-        msg_account: "",
         msg_mobile: "",
         msg_password: "",
         msg_validateCode: "",
         msg_repassword: "",
         msg_sms: "",
 
-        account: "",
         validateCode: "",
         mobile: "",
         password: "",
@@ -44,9 +41,8 @@ var app = new Vue({
                 validateCodeImg: this.validateCode
             }
 
-            console.log(params)
             $.post("/platform/user/validateSendSms.m", params, function (data) {
-                if(data.statusCode === "0") {
+                if(data.statusCode == 0) {
                     app.countDowm = 60;
                     var countDownInterval = window.setInterval(function () {
                         app.countDowm--;
@@ -55,16 +51,13 @@ var app = new Vue({
                             window.clearInterval(countDownInterval);
                         }
                     }, 1000);
+                }else {
+                    alert(data.resultDesc)
                 }
+                app.flushValidateCodeImgLogin()
             });
         },
         register: function () {
-            console.log("----register")
-
-            if (this.account.length == 0) {
-                alert("用户名不能为空")
-                return;
-            }
             if (this.mobile.length == 0) {
                 alert("手机号码不能为空")
                 return;
@@ -96,26 +89,17 @@ var app = new Vue({
             };
             $.post("/platform/user/regist.m", params, function (data) {
                 console.log(data);
-                if(data.statusCode === "0") {
+                if(data.statusCode == 0) {
                     alert("注册成功")
                     window.location.href="login.html";
+                }else {
+                    alert(data.resultDesc)
                 }
             });
 
         },
         flushValidateCodeImgLogin: function () {
             $("#validateCodeImgLogin").attr("src", "/platform/user/getValidateCodeImg.m?t=" + Math.random());
-        },
-        blur_account: function () {
-            if (_jM.validate.isEmpty(this.account)) {
-                this.vshow_account = true;
-                this.msg_account = "用户名不能为空";
-            } else if (!_jM.validate.isLengthBetween(this.account, 6, 16)) {
-                this.vshow_account = true;
-                this.msg_account = "用户名长度应该在6-16";
-            } else {
-                this.vshow_account = false;
-            }
         },
         blur_mobile: function () {
             if (_jM.validate.isEmpty(this.mobile)) {
