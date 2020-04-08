@@ -25,7 +25,7 @@
     <div data-v-71bcbcd0="" class="language fr">
       <div data-v-72d88c58="" data-v-71bcbcd0="" class="language-switch">
         <nav class="nav">
-          <ul class="nav_menu" id="noLogin">
+          <!-- <ul class="nav_menu" id="noLogin">
             <li class="nav_menu-item" ><a href="login.html">登录</a></li>
             <li class="nav_menu-item" ><a href="register.html">注册</a></li>
             <li class="nav_menu-item"><a href="#">中文简体</a>
@@ -36,8 +36,8 @@
                 <li class="nav_submenu-item"> <a href="#">English</a></li>
               </ul>
             </li>
-          </ul>
-          <ul class="nav_menu" id="login" style="display: none;">
+          </ul> -->
+          <ul class="nav_menu" id="login" >
   
             <li class="nav_menu-item"><a href="#"><i data-v-71bcbcd0="" class="iconfont icon-assets preicon"></i> 资产</a>
             
@@ -160,7 +160,7 @@
                 </li>
               </ul>
             </div>
-            <div data-v-1a76b440="" class="last-price"><strong data-v-1a76b440="" class="text-red">231.53</strong> <span data-v-1a76b440="">≈231,5300 KRW</span> 
+            <div data-v-1a76b440="" class="last-price"><strong data-v-1a76b440="" class="text-red" v-html="nowPrice">231.53</strong> <span data-v-1a76b440="">≈231,5300 KRW</span> 
             </div>
             <div data-v-1a76b440="" class="trade-table">
               <ul data-v-1a76b440="" class="trade-table-body selectable">
@@ -183,251 +183,7 @@
                       <div data-v-1a76b440="" :class="item.type==2?'text-green':'text-red'" v-html="item.price">231.53</div>
                       <div data-v-1a76b440=""  v-html="item.number">1.101</div>
                     </li>
-                    <!-- <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">18:11:41</div>
-                      <div data-v-1a76b440="" class="">230.05</div>
-                      <div data-v-1a76b440="">1.439</div>
-                    </li> -->
-                    <!-- <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">17:26:58</div>
-                      <div data-v-1a76b440="" class="text-red">230.32</div>
-                      <div data-v-1a76b440="">1.116</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">16:41:38</div>
-                      <div data-v-1a76b440="" class="text-green">229.09</div>
-                      <div data-v-1a76b440="">2.22</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">16:22:11</div>
-                      <div data-v-1a76b440="" class="text-red">229.21</div>
-                      <div data-v-1a76b440="">1.308</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">15:00:23</div>
-                      <div data-v-1a76b440="" class="text-green">229.03</div>
-                      <div data-v-1a76b440="">1.207</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">14:23:46</div>
-                      <div data-v-1a76b440="" class="text-green">229.29</div>
-                      <div data-v-1a76b440="">1.353</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">13:29:01</div>
-                      <div data-v-1a76b440="" class="text-green">230.82</div>
-                      <div data-v-1a76b440="">1.786</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">10:49:12</div>
-                      <div data-v-1a76b440="" class="text-green">231.99</div>
-                      <div data-v-1a76b440="">1.874</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">08:59:58</div>
-                      <div data-v-1a76b440="" class="text-green">234.13</div>
-                      <div data-v-1a76b440="">1.006</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">07:38:11</div>
-                      <div data-v-1a76b440="" class="text-green">238.43</div>
-                      <div data-v-1a76b440="">1.106</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">07:36:47</div>
-                      <div data-v-1a76b440="" class="text-green">238.68</div>
-                      <div data-v-1a76b440="">1.612</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">06:31:36</div>
-                      <div data-v-1a76b440="" class="text-red">239.24</div>
-                      <div data-v-1a76b440="">1.398</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">06:01:22</div>
-                      <div data-v-1a76b440="" class="text-green">238.12</div>
-                      <div data-v-1a76b440="">1.241</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">05:58:47</div>
-                      <div data-v-1a76b440="" class="text-red">238.22</div>
-                      <div data-v-1a76b440="">1.234</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">05:11:12</div>
-                      <div data-v-1a76b440="" class="text-red">237.82</div>
-                      <div data-v-1a76b440="">1.701</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">05:07:43</div>
-                      <div data-v-1a76b440="" class="text-green">237.81</div>
-                      <div data-v-1a76b440="">2.265</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">02:52:22</div>
-                      <div data-v-1a76b440="" class="text-red">239.18</div>
-                      <div data-v-1a76b440="">1.594</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">02:22:37</div>
-                      <div data-v-1a76b440="" class="text-red">238.86</div>
-                      <div data-v-1a76b440="">1.318</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">02:16:58</div>
-                      <div data-v-1a76b440="" class="text-green">237.48</div>
-                      <div data-v-1a76b440="">0.162</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">02:16:58</div>
-                      <div data-v-1a76b440="" class="text-green">237.48</div>
-                      <div data-v-1a76b440="">1.571</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">01:32:16</div>
-                      <div data-v-1a76b440="" class="text-green">242.45</div>
-                      <div data-v-1a76b440="">1.18</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">23:58:08</div>
-                      <div data-v-1a76b440="" class="text-red">246.18</div>
-                      <div data-v-1a76b440="">1.702</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">23:52:46</div>
-                      <div data-v-1a76b440="" class="text-red">245.61</div>
-                      <div data-v-1a76b440="">1.579</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">22:17:10</div>
-                      <div data-v-1a76b440="" class="text-green">244.4</div>
-                      <div data-v-1a76b440="">1.421</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">20:26:21</div>
-                      <div data-v-1a76b440="" class="text-red">245.18</div>
-                      <div data-v-1a76b440="">1.024</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">20:09:32</div>
-                      <div data-v-1a76b440="" class="text-red">244.59</div>
-                      <div data-v-1a76b440="">1.052</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">19:38:37</div>
-                      <div data-v-1a76b440="" class="text-green">244.02</div>
-                      <div data-v-1a76b440="">1.611</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">18:46:05</div>
-                      <div data-v-1a76b440="" class="text-green">244.34</div>
-                      <div data-v-1a76b440="">1.036</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">18:44:11</div>
-                      <div data-v-1a76b440="" class="text-red">244.8</div>
-                      <div data-v-1a76b440="">1.841</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">18:38:46</div>
-                      <div data-v-1a76b440="" class="text-red">244.61</div>
-                      <div data-v-1a76b440="">1.126</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">18:10:14</div>
-                      <div data-v-1a76b440="" class="text-red">243.98</div>
-                      <div data-v-1a76b440="">1.136</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">17:11:31</div>
-                      <div data-v-1a76b440="" class="text-red">243.74</div>
-                      <div data-v-1a76b440="">1.823</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">16:28:47</div>
-                      <div data-v-1a76b440="" class="text-red">243.47</div>
-                      <div data-v-1a76b440="">1.876</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">15:20:45</div>
-                      <div data-v-1a76b440="" class="text-green">242.26</div>
-                      <div data-v-1a76b440="">1.006</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">14:35:15</div>
-                      <div data-v-1a76b440="" class="text-red">243.19</div>
-                      <div data-v-1a76b440="">1.013</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">13:07:40</div>
-                      <div data-v-1a76b440="" class="text-green">242.21</div>
-                      <div data-v-1a76b440="">1.503</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">10:13:52</div>
-                      <div data-v-1a76b440="" class="text-red">243.97</div>
-                      <div data-v-1a76b440="">1.193</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">10:02:04</div>
-                      <div data-v-1a76b440="" class="text-red">243.04</div>
-                      <div data-v-1a76b440="">1.026</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">10:00:11</div>
-                      <div data-v-1a76b440="" class="text-green">242.99</div>
-                      <div data-v-1a76b440="">2.284</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">08:52:14</div>
-                      <div data-v-1a76b440="" class="text-red">245.38</div>
-                      <div data-v-1a76b440="">1.035</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">07:43:59</div>
-                      <div data-v-1a76b440="" class="text-red">244.28</div>
-                      <div data-v-1a76b440="">1.514</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">07:12:43</div>
-                      <div data-v-1a76b440="" class="text-red">241.06</div>
-                      <div data-v-1a76b440="">1.321</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">07:08:39</div>
-                      <div data-v-1a76b440="" class="text-red">240.25</div>
-                      <div data-v-1a76b440="">1.288</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">07:03:23</div>
-                      <div data-v-1a76b440="" class="text-green">239.66</div>
-                      <div data-v-1a76b440="">1.013</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">05:23:33</div>
-                      <div data-v-1a76b440="" class="text-red">239.68</div>
-                      <div data-v-1a76b440="">1.084</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">05:08:44</div>
-                      <div data-v-1a76b440="" class="text-green">239.16</div>
-                      <div data-v-1a76b440="">1.324</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">05:07:50</div>
-                      <div data-v-1a76b440="" class="text-red">239.22</div>
-                      <div data-v-1a76b440="">1.29</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">04:47:52</div>
-                      <div data-v-1a76b440="" class="text-red">238.94</div>
-                      <div data-v-1a76b440="">1.246</div>
-                    </li>
-                    <li data-v-1a76b440="" class="trade-table-item">
-                      <div data-v-1a76b440="">03:39:18</div>
-                      <div data-v-1a76b440="" class="text-green">238.71</div>
-                      <div data-v-1a76b440="">1.374</div>
-                    </li> -->
+
                   </ul>
                 </div>
                 <div class="el-scrollbar__bar is-horizontal">
@@ -456,8 +212,8 @@
         <div data-v-1a76b440="" class="trade-table">
           <div data-v-1a76b440="" class="trade-table-head"><span data-v-1a76b440="">时间</span> <span data-v-1a76b440="">交易对</span> <span data-v-1a76b440="">方向</span> <span data-v-1a76b440="">价格(KRW)</span> <span data-v-1a76b440="">数量(DPX)</span> <span data-v-1a76b440="">委托总金额(KRW)</span> <span data-v-1a76b440="">已成交数量(DPX)</span> <span data-v-1a76b440="">操作</span></div>
         </div>
-          <div data-v-1a76b440="" class="trade-table" v-for="item in orderList" :key="item">
-        <div data-v-1a76b440="" class="trade-table-head" ><span data-v-1a76b440="" v-html="_jM.date.date2DateTimeString(new Date(item.createTime))"></span> <span data-v-1a76b440="" v-html="item.market+'/KRW'"></span> <span data-v-1a76b440="" v-html="item.type==1?'买入':'卖出'">方向</span> <span data-v-1a76b440="" v-html="item.price"> 价格(KRW)</span> <span data-v-1a76b440="" v-html="item.num">数量(DPX)</span> <span data-v-1a76b440="" v-html="item.mum">委托总金额(KRW)</span> <span data-v-1a76b440="" v-html="item.deal">已成交数量(DPX)</span> <span data-v-1a76b440="" v-if="item.status==0" @click="cancelOrder(item.id)">撤销</span></div>
+          <div data-v-1a76b440="" class="trade-table" v-for="item in orderList" :key="item" v-if="isToday(item)">
+        <div data-v-1a76b440="" class="trade-table-head" ><span data-v-1a76b440="" v-html="_jM.date.date2DateTimeString(new Date(item.createTime))"></span> <span data-v-1a76b440="" v-html="item.market+'/KRW'"></span> <span data-v-1a76b440="" v-html="item.type==1?'买入':'卖出'">方向</span> <span data-v-1a76b440="" v-html="item.price"> 价格(KRW)</span> <span data-v-1a76b440="" v-html="item.num">数量(DPX)</span> <span data-v-1a76b440="" v-html="item.mum">委托总金额(KRW)</span> <span data-v-1a76b440="" v-html="item.deal">已成交数量(DPX)</span> <span data-v-1a76b440="" v-if="item.status==0" @click="cancelOrder(item.id)">撤销</span><span data-v-1a76b440="" v-else>-</span></div>
       </div>
         
       </div>
@@ -474,7 +230,8 @@
                 <label data-v-1a76b440="" class="label">买入价</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner" v-model="buyPrice">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="buyPrice" @change="validateInput($event.target);validatNumber($event.target,1)" @input="validateInput($event.target);validatNumber($event.target,1)"
+                    @keyup="validatNumber($event.target,1);" @blur="validatNull($event.target);total(1);">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">KRW</span></div>
               </div>
@@ -482,7 +239,8 @@
                 <label data-v-1a76b440="" class="label">买入量</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner" v-model="buyNumber">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="buyNumber" @change="validateInput($event.target);validatNumber($event.target,2)" @input="validateInput($event.target);validatNumber($event.target,2)"
+                    @keyup="validatNumber($event.target,2);" @blur="validatNull($event.target);total(1);">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">DPX</span></div>
               </div>
@@ -509,7 +267,8 @@
                 <label data-v-1a76b440="" class="label">卖出价</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner" v-model="sellPrice">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="sellPrice" @change="validateInput($event.target);validatNumber($event.target,1)" @input="validateInput($event.target);validatNumber($event.target,1)"
+                    @keyup="validatNumber($event.target,1);" @blur="validatNull($event.target);total(2);">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">KRW</span></div>
               </div>
@@ -517,7 +276,8 @@
                 <label data-v-1a76b440="" class="label">卖出量</label>
                 <div data-v-1a76b440="" class="trade-input">
                   <div data-v-1a76b440="" class="el-input el-input--mini"><!---->
-                    <input type="number" autocomplete="off" class="el-input__inner" v-model="sellNumber">
+                    <input type="number" autocomplete="off" class="el-input__inner" v-model="sellNumber" @change="validateInput($event.target);validatNumber($event.target,2)" @input="validateInput($event.target);validatNumber($event.target,2)"
+                    @keyup="validatNumber($event.target,2);" @blur="validatNull($event.target);total(2);">
                     <!----><!----><!----><!----></div>
                   <span data-v-1a76b440="" class="currency">DPX</span></div>
               </div>
@@ -560,9 +320,9 @@
 
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/mt-tabpage.js"></script>
+<script src="./js/socket.io.js"></script>
 <script src="./js/public.js"></script>
 <script src="./js/vue.min.js"></script>
-<script src="./js/socket.io.js"></script>
 <script src="./js/viewjs/trade.js"></script>
 <script type="text/javascript">
 $(function () {

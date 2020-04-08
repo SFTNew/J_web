@@ -28,7 +28,7 @@ jModule.prototype.login = {
         // }
         // alert("跳转");
         // top.window.location.href="/login/login.html#lo?backURL="+backURL;
-        window.top.location.href="/index.html?flag=true"
+        window.top.location.href="/login.html?flag=true"
     },
     logout:function(){
         _jM.post("/platform/user/serverLogout.m",null,function(){

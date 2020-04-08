@@ -9,6 +9,7 @@ var app = new Vue({
         sellTotal:0,
         canUseKRW:0,
         canUseCoin:0,
+        nowPrice:0,
         buyList:[],//买入委托记录
         sellList:[],//卖出委托
         tradeList:[],//成交记录
@@ -33,6 +34,7 @@ var app = new Vue({
 
             _jM.post("/trade/order/serverCreateOrder.o", param, function (rs, data) {
                 alert("下单成功");
+                app.clearData();
                 $(obj).removeAttr('disabled');
             },function(rs){
                 $(obj).removeAttr('disabled');
@@ -104,8 +106,10 @@ var app = new Vue({
             this.market = item;
             this.getUserAccount();
             this.getTurnoverOrderList();
-            this.getDepth();
+            this.getDepth(); 
             this.getEntrustOrderList();
+            this.getMarketCurrentPrice();
+            initSocket();
         },
         //获取用户账户
         getUserAccount: function(){
@@ -120,11 +124,18 @@ var app = new Vue({
         getEntrustOrderList:function(){
             _jM.post("/trade/order/serverGetEntrustOrderList.o?rows=20&page=1&marketId=" + this.market.tradeMarket.id + "&status=-1", null, function (rs, data) {
                 if (data != null) {
-                    app.orderList = data.result;
+                    app.orderList = [];
+                    app.orderList.push(...data.result);
                     // alert(JSON.stringify(app.orderList))
                 }
             });
         },
+        getMarketCurrentPrice:function () {
+            _jM.post("/trade/data/getNewest.o?marketId=" +this.market.tradeMarket.id, null, function (rs, data) {
+                if (data != null) {
+                    console.log(data);
+                }
+            })},
         //获取成交记录
         getTurnoverOrderList:function() {
             _jM.post("/trade/order/getTurnoverOrderList.o?marketId=" + this.market.tradeMarket.id, null, function (rs, data) {
@@ -133,6 +144,14 @@ var app = new Vue({
                     
                 }
             });
+        },
+        clearData:function(){
+            this.buyPrice = 0;
+            this.sellPrice = 0;
+            this.buyNumber = 0;
+            this.sellNumber = 0;
+            this.buyTotal = 0;
+            this.sellTotal = 0;
         },
         //计算涨跌幅
         getzdf:function(item){
@@ -199,6 +218,42 @@ var app = new Vue({
                 $("#noLogin").show()
             });
         },
+        validateInput:function (obj){
+            var val = parseFloat($(obj).val());
+        
+            if(val < 0){
+                $(obj).val(0);
+            }
+            if($(obj).val().indexOf("0") == 0 && $(obj).val() >= 1){
+                $(obj).val(val);
+            }
+        },
+        
+        validatNumber:function (obj,type) {
+            if(type==2){
+                obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+                obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字
+                obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个, 清除多余的
+                obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+                obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+            }else{
+                obj.value = obj.value.replace(/[^\d]/g, ""); //清除"数字"和"."以外的字符
+                
+            }
+        },
+        
+        validatNull:function (obj) {
+            if (obj.value == null || obj.value == "") {
+                layer.tips("请输入数据", obj);
+            }
+        },
+        total:function(type){
+            if(type ==1){
+                this.buyTotal = this.buyNumber * this.buyPrice;
+            }else{
+                this.sellTotal = this.sellNumber * this.sellPrice;
+            }
+        }
     },
     created:function(){
         this.isLogin();
@@ -206,151 +261,50 @@ var app = new Vue({
     }
 })
 
-// $(function(){
-//     socket && socket.connected && socket.close();
-//     socket = socket = io("ws://47.75.63.29:9092/?market=" + market.id+"&userSession="+_jM.getCookie("szxzjx.cn"), {transports: ["websocket", "pull"],reconnect: false,forceNew: true});
-//     socket.on('ok', function (data) {
-//         console.log(data);
-//     });
-//     socket.on('depth', function (data) {
-//         console.log("收到下单");
-//         // var data = JSON.parse(data);
-//         // if (depthLastTime != null && data.time < depthLastTime) {
-//         //     return;
-//         // }
-//         // resolveDepth(data);
-//     });
+var socket;
+var depthLastTime = null;
 
-//     socket.on('tunoverOrder', function (data) {
-//         console.log("收到成交单");
-//         var json = JSON.parse(data);
-//         data = json.tunoverOrder;
-//         //订单成交
-//         //getMarketPrice();
-//         // if (data != null) {
-//         //     var turnoverList = "";
-//         //     var now = new Date();
-//         //     for (var i = 0; i < data.length; i++) {
+function initSocket(){
+   
+    socket && socket.connected && socket.close();
+    console.log("初始化socket");
+    socket = socket = io("ws://47.75.63.29:9092/?market=" + app.market.tradeMarket.id+"&userSession="+_jM.getCookie("szxzjx.cn"), {transports: ["websocket", "pull"],reconnect: false,forceNew: true});
+    socket.on('ok', function (data) {
+        console.log("链接成功");
+    });
+    socket.on('depth', function (data) {
+        console.log("收到下单");
+        var data = JSON.parse(data);
+        if (depthLastTime != null && data.time < depthLastTime) {
+            return;
+        }
+        app.buyList = [];
+        app.sellList = [];
+        app.sellList.push(...data.sells);
+        app.buyList.push(...data.buys);
+        
+    });
 
-//         //         var date = new Date(data[i].createTime);
-//         //         if(date.getUTCFullYear() != now.getUTCFullYear() || date.getUTCDay() != now.getUTCDay()
-//         //             || date.getUTCMonth() != now.getUTCMonth()
-//         //         ){
-//         //             break;
-//         //         }
+    socket.on('tunoverOrder', function (data) {
+        console.log("收到成交单");
+        var json = JSON.parse(data);
+        data = json.tunoverOrder;
+        app.tradeList = [];
+        app.tradeList.push(...data);
+    });
 
-//         //         if(i == 0){
-                
-//         //             var big;
-//         //             var small;
-//         //             var nowprice = keepTwoDecimalFull(data[i].price);
-//         //             var dotindex = nowprice.indexOf(".");
+    socket.on('clean', function (data) {
+        //系统清理委托单完成的时候 统一刷新页面
+        app.buyList.length = 0;
+        app.sellList.length = 0;
+    });
 
-//         //             if(dotindex >= 0){
-//         //                 big = nowprice.substring(0,dotindex);
-//         //                 small = nowprice.substring(dotindex + 1,nowprice.length);
-//         //                 if(small.length < 2){
-//         //                     small += '0';
-//         //                 }
-//         //             }
-//         //             $("#currentPrice").html(big+".<span class='mini-price'>"+ small +"￥</span>");
-
-//         //             var old = parseFloat($("#totalNum").text());
-//         //             $("#totalNum").html(keepTwoDecimalFull(old+data[i].number*2));
-//         //             var zdf = keepTwoDecimalFull((data[i].price - lastTodayPrice) /lastTodayPrice * 100);
-//         //             zdf = !isFinite(zdf) ? 0 : zdf;
-//         //             if (_last_price != data[i].price) {
-//         //                 if (data[i].price >= _last_price) {
-//         //                     $("#currentPrice").css("color", "red");
-//         //                     $('#currentPrice').next('i').addClass('tu_rnon').removeClass('next_down');
-//         //                 } else {
-//         //                     $("#currentPrice").css("color", "green");
-//         //                     $('#currentPrice').next('i').addClass('next_down').removeClass('tu_rnon');
-//         //                     $('#currentPrice').next('i').height(60);
-//         //                 }
-//         //             }
-//         //             $("#zhangdie").html(zdf + "%");
-
-//         //             if (keepTwoDecimalFull(zdf) > 0) {
-//         //                 $("#zhangdie").css("color", "red");
-//         //             } else {
-//         //                 $("#zhangdie").css("color", "green");
-//         //             }
-
-//         //             changeMax(data[i].price);
-//         //             changeMin(data[i].price);
-
-//         //             try{
-//         //                 var a = data[i].createTime;
-//         //                 var b = {
-//         //                     l:parseFloat(data[i].number),
-//         //                     j:parseFloat(data[i].number) * parseFloat(data[i].price),
-//         //                     s:parseFloat(data[i].price),
-//         //                     max:parseFloat($("#maxPrice").text()),
-//         //                     min:parseFloat($("#minPrice").text())
-//         //                 };
-//         //                 super_setdata(a,b);
-//         //             }catch (erro){
-
-//         //             }
-
-//         //         }
-
-
-//         //         var isBuy = data[i].type == 1;
-//         //         var date = new Date(data[i].createTime);
-//         //         var hours = date.getHours()<10?'0'+date.getHours():date.getHours();
-//         //         var minetes = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
-//         //         var seconds = date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds();
-//         //         turnoverList +=
-//         //             "<tr class='" + (!isBuy ? "red" : "green") + "'>" +
-//         //             "<td width='60'>" + (hours+":"+minetes+":"+seconds) + "</td>" +
-//         //             "<td width='60'>" + keepTwoDecimalFull(data[i].price) + "</td>" +
-//         //             "<td width='60'>" + keepTwoDecimalFull(data[i].number) + "</td>\n" +
-//         //             "</tr>";
-//         //     }
-//         //     $("#tunoverList").html(turnoverList);
-//         // }
-//     });
-
-//     socket.on('clean', function (data) {
-//         //系统清理委托单完成的时候 统一刷新页面
-//         $("#myEntrustList").html("");
-//     });
-
-//     socket.on('user', function (data, time) {
-//         console.log("收到用户更新");
-//         // if (data != null) {
-//         //     var html = "";
-//         //     var now = new Date();
-//         //     for (var i = 0; i < data.length; i++) {
-//         //         var isBuy = data[i].type == 1;
-//         //         var date = new Date(data[i].createTime);
-//         //         if(date.getUTCFullYear() != now.getUTCFullYear() || date.getUTCDay() != now.getUTCDay()
-//         //             || date.getUTCMonth() != now.getUTCMonth()
-//         //         ){
-//         //             break;
-//         //         }
-//         //         html += "<tr class='" + (isBuy ? "red" : "green") + "'>" +
-//         //             " <td>"+_jM.date.date2DateTimeString(date)+"</td>"+
-//         //             " <td>" + (isBuy ? "买" : "卖") + "</td>\n" +
-//         //             " <td>" + keepTwoDecimalFull(data[i].price) + "</td>\n" +
-//         //             " <td>" + keepTwoDecimalFull(data[i].num) + "</td>\n" +
-//         //             " <td>" + keepTwoDecimalFull(data[i].deal) + "</td>\n" +
-//         //             " <td>" + keepTwoDecimalFull(data[i].num-data[i].deal) + "</td>\n" +
-//         //             " <td>" + (data[i].status==0 ? "未成交":(data[i].status==1 ?"已成交":"已撤销"))+ "</td>\n" +
-//         //             "<td>"+(data[i].status==0 ?"<a class='c_0662f4' href='javascript:void(0)' onclick='cancelOrder(this,\"" + data[i].id + "\")'>撤销委托</a>":(data[i].status==1?"完成":"已撤销"))+"</td>" +
-//         //             " </tr>";
-//         //     }
-//         //     if(data.length <= 0){
-//         //         html += "<tr><td rowspan='8' class='no-hover' style='font-size: 16px;color:#888;padding: 28px 0px !important;text-align: center;'><i class='warn'></i>暂无委托</td></tr>";
-//         //     }
-//         //     //console.log("weituo")
-//         //     $("#myEntrustList").html(html);
-//         // }
-//         // getUserAccount();
-//     });
-//     socket.on('disconnect', function () {
-//         socket = socket = io("ws://47.75.63.29:9092/?market=" +  market.id+"&userSession="+_jM.getCookie("szxzjx.cn"), {transports: ["websocket", "pull"]});
-//     });
-// })
+    socket.on('user', function (data, time) {
+        console.log("收到用户更新");
+        app.getEntrustOrderList();
+        app.getUserAccount();
+    });
+    socket.on('disconnect', function () {
+        socket = socket = io("ws://47.75.63.29:9092/?market=" + app.market.tradeMarket.id+"&userSession="+_jM.getCookie("szxzjx.cn"), {transports: ["websocket", "pull"]});
+    });
+}
